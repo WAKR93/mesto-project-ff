@@ -14,8 +14,9 @@ const popupNewCard = document.querySelector('.popup_type_new-card');
 const formElement = document.querySelector('.popup__form');
 const nameInput = formElement.querySelector('.popup__input_type_name');
 const jopInput = formElement.querySelector('.popup__input_type_description');
-//const nameNewCard = document.querySelector();
-//const linkNewCard = document.querySelector();
+const formNewCard = document.forms['new-place'];
+const nameNewCard = formNewCard.elements['place-name'];
+const linkNewCard = formNewCard.elements['link'];
 // @todo: Функция редактирования профиля
 const handleFormSubmit = (evt) => {
   evt.preventDefault();
@@ -40,11 +41,15 @@ const removeCard = (element) => {
  element.remove();
 }
 // @todo: Функция добавления карточки
-const newAddCard = (name, link) => {
+const newAddCard = (evt) => {
+  evt.preventDefault();
   const objCard = {};
-  objCard.name = name;
-  objCard.link = link;
-  console.log(objCard);
+  const flagOpenPopup = document.querySelector('.popup_is-opened');
+  objCard.name = nameNewCard.value;
+  objCard.link = linkNewCard.value;
+  cardOnline.prepend(addCard(objCard));
+  closePopup(flagOpenPopup);
+  evt.target.reset();
 };
 // @todo: Функция закрытия модального окна
 const closePopup = (popup) => {
@@ -65,7 +70,6 @@ popupArr.forEach((item) => {
 });
 // @todo: закрытие модального окна ESC
 page.addEventListener('keydown', (evt) => {
-    console.log(evt.key)
     if(evt.key === 'Escape') {
        closePopup(document.querySelector('.popup_is-opened'));
     };
@@ -80,4 +84,4 @@ btnAddCard.addEventListener('click', () => {
 });
 // @todo: кнопка сохранить в редакторе профиля
 formElement.addEventListener('submit', handleFormSubmit);
-//formElement.addEventListener('submit', newAddCard());
+formNewCard.addEventListener('submit', newAddCard);
