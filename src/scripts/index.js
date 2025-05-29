@@ -1,5 +1,10 @@
 import { initialCards } from "./cards";
 import '../pages/index.css';
+import { addCard, liked, removeCard, newAddCard } from "./card";
+import { closePopup, imageCardPopup } from "./modal"
+export { cardTemplate, cardOnline, resetInputVal, 
+         formNewCard, nameNewCard, linkNewCard, 
+         imgElPopup, textImgElPopup, popupImage};
 
 // @todo: Темплейт карточки
 const cardTemplate = document.querySelector('#card-template').content;
@@ -31,59 +36,19 @@ const handleFormSubmit = (evt) => {
   jopProfile.textContent = jopInput.value;
   closePopup(document.querySelector('.popup_is-opened'));
 };
-// @todo: Функция создания карточки
-const addCard = (dataCard, liked, imageCardPopup) => {
-  const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
-  const buttonRemove = cardElement.querySelector('.card__delete-button');
-  const image = cardElement.querySelector('.card__image');
-  const name = cardElement.querySelector('.card__title');
-  image.src = dataCard.link;
-  image.setAttribute('alt', dataCard.name);
-  name.textContent = dataCard.name;  
-  buttonRemove.addEventListener('click', function (evt) {
-    removeCard(cardElement);
-  });
-  return cardElement;
-}
-// @todo: Функция удаления карточки
-const removeCard = (element) => {
- element.remove();
-}
-// @todo: Функция добавления карточки
-const newAddCard = (evt) => {
-  evt.preventDefault();
-  const objCard = {};
-  objCard.name = nameNewCard.value;
-  objCard.link = linkNewCard.value;
-  cardOnline.prepend(addCard(objCard));
-  closePopup(document.querySelector('.popup_is-opened'));
-  evt.target.reset();
-};
-// @todo: Функция закрытия модального окна
-const closePopup = (popup) => {
-  popup.classList.remove('popup_is-opened');
-  resetInputVal.forEach((item) => {
-    item.value = '';
-  });
-};
-// @todo: Функция лайка  карточки
-const liked = (evt) => {
-  if (evt.target.classList.contains('card__like-button')) {
-    evt.target.classList.toggle('card__like-button_is-active');
-  }
-};
-// @todo: Функция вызова popup картинки карточки
-const imageCardPopup = (evt) => {
-  if (evt.target.classList.contains('card__image')) {
-    imgElPopup.setAttribute('src', evt.target.src);
-    imgElPopup.setAttribute('alt', evt.target.alt);
-    textImgElPopup.textContent = evt.target.alt;
-    popupImage.classList.add('popup_is-opened');
-  }
-};
 // @todo: Вывести карточки на страницу
 initialCards.forEach((element) => {
   cardOnline.append(addCard(element, liked, imageCardPopup));
+});
+// @todo: вызов модального окна профиля
+btnEditProfile.addEventListener('click', () => {
+  nameInput.value = nameProfile.textContent;
+  jopInput.value = jopProfile.textContent;
+  popupEditProfil.classList.add('popup_is-opened');
+});
+// @todo: вызов модального окна карточки
+btnAddCard.addEventListener('click', () => {
+  popupNewCard.classList.add('popup_is-opened');
 });
 // @todo: закрытие модального окна кликом
 popupArr.forEach((item) => {
@@ -101,16 +66,6 @@ page.addEventListener('keydown', (evt) => {
        closePopup(document.querySelector('.popup_is-opened'));
     };
   });
-// @todo: вызов модального окна профиля
-btnEditProfile.addEventListener('click', () => {
-  nameInput.value = nameProfile.textContent;
-  jopInput.value = jopProfile.textContent;
-  popupEditProfil.classList.add('popup_is-opened');
-});
-// @todo: вызов модального окна карточки
-btnAddCard.addEventListener('click', () => {
-  popupNewCard.classList.add('popup_is-opened');
-});
 // @todo: кнопка сохранить в редакторе профиля
 formElement.addEventListener('submit', handleFormSubmit);
 // @todo: кнопка сохранить в редакторе карточки
