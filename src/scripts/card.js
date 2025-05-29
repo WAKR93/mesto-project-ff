@@ -18,7 +18,7 @@ const addCard = (dataCard, liked, imageCardPopup) => {
 // @todo: Функция лайка  карточки
 const liked = (evt) => {
   if (evt.target.classList.contains('card__like-button')) {
-    evt.target.classList.toggle('card__like-button_is-active');
+     evt.target.classList.toggle('card__like-button_is-active');
   }
 };
 // @todo: Функция создание карточки

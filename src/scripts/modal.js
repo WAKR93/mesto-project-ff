@@ -1,16 +1,15 @@
-import { resetInputVal, imgElPopup, textImgElPopup, popupImage} from '.';
-export { closePopup, imageCardPopup };
+import { resetInputVal, nameInput, jopInput, nameProfile, jopProfile } from '.';
+export {openPopup, closePopup };
 
-
-// @todo: Функция вызова popup картинки карточки
-const imageCardPopup = (evt) => {
-  if (evt.target.classList.contains('card__image')) {
-    imgElPopup.setAttribute('src', evt.target.src);
-    imgElPopup.setAttribute('alt', evt.target.alt);
-    textImgElPopup.textContent = evt.target.alt;
-    popupImage.classList.add('popup_is-opened');
+// todo: Функция вызова модального окна
+const openPopup = (popup, evt) => {
+  if (popup.className.includes('popup_type_edit')) {
+      nameInput.value = nameProfile.textContent;
+      jopInput.value = jopProfile.textContent;
   }
+  popup.classList.add('popup_is-opened');
 };
+
 // @todo: Функция закрытия модального окна
 const closePopup = (popup) => {
   popup.classList.remove('popup_is-opened');
