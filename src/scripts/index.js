@@ -2,7 +2,7 @@ import { initialCards } from "./cards";
 import '../pages/index.css';
 import { addCard, likeIt, removeCard, createCard } from "./card";
 import { openPopup, closePopup, pressEsc } from "./modal"
-export {cardTemplate, nameNewCard, linkNewCard, cardOnline, popupNewCard};
+//export {cardTemplate, nameNewCard, linkNewCard, cardOnline, popupNewCard};
 
 // @todo: Темплейт карточки
 const cardTemplate = document.querySelector('#card-template').content;
@@ -41,7 +41,7 @@ const handleFormSubmit = (evt) => {
 };
 // @todo: Вывести карточки на страницу
 initialCards.forEach((element) => {
-  cardOnline.append(addCard(element, likeIt, openImgFull));
+  cardOnline.append(addCard(cardTemplate, element, likeIt, openImgFull));
 });
 // todo: функция управления анимацией popup
 const animatedPopup = () => {
@@ -84,14 +84,14 @@ popupArr.forEach((item) => {
       closePopup(item);
       resetInputVal.forEach((item) => {
         item.value = '';
-  });
+      });
     };
   });
 });
 // @todo: кнопка сохранить в редакторе профиля
 formElement.addEventListener('submit', handleFormSubmit);
 // @todo: кнопка сохранить в редакторе карточки
-formNewCard.addEventListener('submit', createCard);
+formNewCard.addEventListener('submit', createCard(cardTemplate, cardOnline, nameNewCard, linkNewCard, popupNewCard) );
 // @todo: кнопка like в карточке
 cardOnline.addEventListener('click', likeIt);
 // @todo: кнопка delete в карточке

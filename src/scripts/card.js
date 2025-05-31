@@ -1,8 +1,8 @@
 export { addCard, likeIt, removeCard, createCard };
-import { cardTemplate, nameNewCard, linkNewCard, cardOnline, popupNewCard } from ".";
+import { cardTemplate, nameNewCard, linkNewCard, popupNewCard } from ".";
 import { closePopup } from "./modal";
 // @todo: Функция добавление карточек
-const addCard = (dataCard, likeIt, openImgFull) => {
+const addCard = (cardTemplate, dataCard, likeIt, openImgFull) => {
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   const image = cardElement.querySelector('.card__image');
   const name = cardElement.querySelector('.card__title');
@@ -12,18 +12,18 @@ const addCard = (dataCard, likeIt, openImgFull) => {
   return cardElement;
 }
 // @todo: Функция создание карточки
-const createCard = (evt) => {
-  evt.preventDefault();
+const createCard = (cardTemplate, cardOnline, nameNewCard, linkNewCard, popupNewCard) => (evt) => {
+  evt.preventDefault(); 
   const objCard = {};
   objCard.name = nameNewCard.value;
   objCard.link = linkNewCard.value;
-  cardOnline.prepend(addCard(objCard));
+  cardOnline.prepend(addCard(cardTemplate, objCard));
   closePopup(popupNewCard);
 };
 // @todo: Функция удаления карточки
 const removeCard = (evt) => {
-  if (evt.target.classList.contains('card__delete-button')) {
-    evt.target.remove();
+   if (evt.target.classList.contains('card__delete-button')) {
+    evt.target.parentElement.remove();
   }
 }
 // @todo: Функция лайка  карточки
