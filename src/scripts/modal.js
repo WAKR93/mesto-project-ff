@@ -1,4 +1,4 @@
-export { openPopup, closePopup, pressEsc };
+export { openPopup, closePopup };
 
 // todo: Функция вызова модального окна
 const openPopup = (popup) => {
