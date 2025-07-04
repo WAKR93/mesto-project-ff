@@ -28,41 +28,31 @@ const createCard = (
     }
   });
   if (dataCard.owner._id === userId) {
-    btnDelCard.classList.remove("crad__delete-button-no-active");
     btnDelCard.addEventListener("click", removeCard(dataCard, deleteCardApi));
   } else {
-    btnDelCard.classList.add("crad__delete-button-no-active");
-    btnDelCard.removeEventListener(
-      "click",
-      removeCard(dataCard, deleteCardApi)
-    );
+    btnDelCard.remove();
   }
   btnLikeCard.addEventListener(
     "click",
-    likeIt(dataCard, dislikeCardApi, likeCardApi)
+    likeIt(dataCard, dislikeCardApi, likeCardApi, valLikeCount, btnLikeCard)
   );
   imgCard.addEventListener("click", openImgFull);
   return cardElement;
 };
 //@todo: Функция удаления карточки
 const removeCard = (dataCard, deleteCardApi) => (evt) => {
-  evt.target.parentElement.remove();
   deleteCardApi(dataCard._id)
-    .then((data) => {
-      console.log(data);
-    })
+    .then(evt.target.closest('.card').remove())
     .catch((err) => {
       console.log(err);
     });
 };
 //@todo: Функция лайка  карточки
-const likeIt = (dataCard, dislikeCardApi, likeCardApi) => (evt) => {
-  const valCountLikes =
-    evt.target.parentElement.querySelector(".card__like-count");
-  if (evt.target.classList.contains("card__like-button_is-active")) {
+const likeIt = (dataCard, dislikeCardApi, likeCardApi, valCountLikes, btnLike ) => (evt) => {
+  if (btnLike.classList.contains("card__like-button_is-active")) {
     dislikeCardApi(dataCard._id)
       .then((data) => {
-        evt.target.classList.remove("card__like-button_is-active");
+        btnLike.classList.remove("card__like-button_is-active");
         valCountLikes.textContent = data.likes.length;
       })
       .catch((err) => {
@@ -71,7 +61,7 @@ const likeIt = (dataCard, dislikeCardApi, likeCardApi) => (evt) => {
   } else {
     likeCardApi(dataCard._id)
       .then((data) => {
-        evt.target.classList.add("card__like-button_is-active");
+        btnLike.classList.add("card__like-button_is-active");
         valCountLikes.textContent = data.likes.length;
       })
       .catch((err) => {

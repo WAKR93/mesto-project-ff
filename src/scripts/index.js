@@ -54,7 +54,7 @@ const validationConfig = {
 };
 //@todo: Лоадер 
 const renderLoading = (isLoading, evt) => {
-  const btnSave = evt.target.querySelector(".button");
+  const btnSave = evt.submitter;
   if(isLoading){
     btnSave.textContent = "Сохранение...";
   }
@@ -179,6 +179,8 @@ const addCard =
             likeCardApi
           )
         );
+        closeCard(popup);
+        clInput(input);
       })
       .catch((err) => {
         console.log(err);
@@ -186,19 +188,17 @@ const addCard =
       .finally(() => {
         Loading(false, evt);
       });
-    closeCard(popup);
-    clInput(input);
   };
 //@todo: Функция очистки input
-const clearingInput = (input) => {
-  input.forEach((item) => {
+const clearingInput = (inputList) => {
+  inputList.forEach((item) => {
     item.value = "";
   });
 };
 //@todo: вызов модального окна смены аватарки
 avatarProfile.addEventListener("click", () => {
-  clearValidation(popupNewAvatar, validationConfig);
   clearingInput(resetInputVal);
+  clearValidation(popupNewAvatar, validationConfig);
   openPopup(popupNewAvatar);
 });
 //@todo: вызов модального окна профиля
@@ -210,8 +210,8 @@ btnEditProfile.addEventListener("click", () => {
 });
 //@todo: вызов модального окна создания карточки
 btnAddCard.addEventListener("click", () => {
-  clearValidation(popupNewCard, validationConfig);
   clearingInput(resetInputVal);
+  clearValidation(popupNewCard, validationConfig);
   openPopup(popupNewCard);
 });
 // @todo: закрытие модального окна кликом

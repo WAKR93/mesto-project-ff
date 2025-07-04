@@ -6,27 +6,23 @@ const apiConfig = {
     "Content-Type": "application/json",
   },
 };
+const getResponseData = (res) => {
+  if (!res.ok) {
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+  return res.json();
+};
 
 export const getInitialProfileData = () => {
   return fetch(`${apiConfig.address}/users/me`, {
     headers: apiConfig.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(getResponseData);
 };
 
 export const getInitialCards = () => {
   return fetch(`${apiConfig.address}/cards`, {
     headers: apiConfig.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(getResponseData);
 };
 
 export const postDatdProfile = (nameProfileInput, aboutProfileInput) => {
@@ -37,12 +33,7 @@ export const postDatdProfile = (nameProfileInput, aboutProfileInput) => {
       name: nameProfileInput,
       about: aboutProfileInput,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(getResponseData);
 };
 
 export const addNewCard = (nameCardInput, linkCardInput) => {
@@ -53,48 +44,28 @@ export const addNewCard = (nameCardInput, linkCardInput) => {
       name: nameCardInput,
       link: linkCardInput,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(getResponseData);
 };
 
 export const deleteCardApi = (cardId) => {
   return fetch(`${apiConfig.address}/cards/${cardId}`, {
     method: "DELETE",
     headers: apiConfig.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(getResponseData);
 };
 
 export const likeCardApi = (cardId) => {
   return fetch(`${apiConfig.address}/cards/likes/${cardId}`, {
     method: "PUT",
     headers: apiConfig.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(getResponseData);
 };
 
 export const dislikeCardApi = (cardId) => {
   return fetch(`${apiConfig.address}/cards/likes/${cardId}`, {
     method: "DELETE",
     headers: apiConfig.headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(getResponseData);
 };
 
 export const newAvatarApi = (linkNewAvatar) => {
@@ -104,10 +75,5 @@ export const newAvatarApi = (linkNewAvatar) => {
     body: JSON.stringify({
       avatar: linkNewAvatar,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  }).then(getResponseData);
 };
