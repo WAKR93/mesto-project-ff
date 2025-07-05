@@ -115,6 +115,7 @@ const handleProfileFormSubmit = (Loading) => (evt) => {
     .then((data) => {
       nameProfile.textContent = data.name;
       jopProfile.textContent = data.about;
+      closePopup(document.querySelector(".popup_is-opened"));
     })
     .catch((err) => {
       console.log(err);
@@ -122,7 +123,6 @@ const handleProfileFormSubmit = (Loading) => (evt) => {
     .finally(() => {
         Loading(false, evt);
     });
-  closePopup(document.querySelector(".popup_is-opened"));
 };
 //@todo: Функция вывода информации о пользователе на страницу
 const addDataProfile = (userData) => {
